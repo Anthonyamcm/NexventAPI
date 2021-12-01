@@ -18,8 +18,13 @@ async function authenticate({ email, password }) {
     if (user && bcrypt.compareSync(password, user.hash)) {
         const token = jwt.sign({ sub: user.id }, config.secret, { expiresIn: '7d' });
         return {
-            ...user.toJSON(),
-            token
+            status: {
+                code: 200
+            },
+            body: {
+                ...user.toJSON(),
+                token
+            }
         };
     }
 }
@@ -35,7 +40,7 @@ async function getById(id) {
 async function create(userParam) {
     // validate
     if (await User.findOne({ email: userParam.email })) {
-        throw 'email"' + userParam.username + '" is already in use';
+        throw 'email is already in use';
     }
 
     const user = new User(userParam);
@@ -47,6 +52,7 @@ async function create(userParam) {
 
     // save user
     await user.save();
+
 }
 
 async function update(id, userParam) {

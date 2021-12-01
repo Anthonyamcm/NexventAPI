@@ -14,6 +14,8 @@ app.use(jwt());
 
 // api routes
 app.use('/users', require('./users/user.controller'));
+app.use('/business', require('./business/business.controller'));
+app.use('/events', require('./events/events.controller'));
 
 // global error handler
 app.use(errorHandler);

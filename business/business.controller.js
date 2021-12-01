@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const userService = require('./user.service');
+const businessService = require('./business.service');
 
 // routes
 router.post('/authenticate', authenticate);
@@ -14,43 +14,43 @@ router.delete('/:id', _delete);
 module.exports = router;
 
 function authenticate(req, res, next) {
-    userService.authenticate(req.body)
+    businessService.authenticate(req.body)
         .then(user => user ? res.status(200).json(user) : res.status(200).json({ message: 'email or password is incorrect' }))
         .catch(err => next(err));
 }
 
 function register(req, res, next) {
-    userService.create(req.body)
-        .then(() => res.json({code: 200}))
+    businessService.create(req.body)
+        .then(user => user ? res.status(200).json(user) : res.status().json({ message: 'user taken' }))
         .catch(err => next(err));
 }
 
 function getAll(req, res, next) {
-    userService.getAll()
+    businessService.getAll()
         .then(users => res.json(users))
         .catch(err => next(err));
 }
 
 function getCurrent(req, res, next) {
-    userService.getById(req.user.sub)
+    businessService.getById(req.user.sub)
         .then(user => user ? res.json(user) : res.sendStatus(404))
         .catch(err => next(err));
 }
 
 function getById(req, res, next) {
-    userService.getById(req.params.id)
+    businessService.getById(req.params.id)
         .then(user => user ? res.json(user) : res.sendStatus(404))
         .catch(err => next(err));
 }
 
 function update(req, res, next) {
-    userService.update(req.params.id, req.body)
+    businessService.update(req.params.id, req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }
 
 function _delete(req, res, next) {
-    userService.delete(req.params.id)
+    businessService.delete(req.params.id)
         .then(() => res.json({}))
         .catch(err => next(err));
 }

@@ -3,11 +3,10 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
     email: { type: String, unique: true, required: 'Please enter your email' },
-    name: { type: String, required: 'Please enter your name' },
+    company: { type: String, required: 'Please enter your company name' },
     hash: { type: String, required: true },
     createdDate: { type: Date, default: Date.now },
-    likes: {type: Array, default: []},
-    dislikes: {type: Array, default: []}
+    lastLogin: {type: Date, default: Date.now}
 });
 
 schema.set('toJSON', {
@@ -19,4 +18,4 @@ schema.set('toJSON', {
     }
 });
 
-module.exports = mongoose.model('User', schema, 'User');
+module.exports = mongoose.model('Business', schema, 'Business');

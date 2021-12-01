@@ -13,7 +13,7 @@ recordRoutes.route('/users').get(async function (_req, res) {
   const dbConnect = dbo.getDb();
 
   dbConnect
-    .collection('MobileUsers')
+    .collection('MobileUser')
     .find({})
     .limit(50)
     .toArray(function (err, result) {

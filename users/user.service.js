@@ -10,6 +10,8 @@ module.exports = {
     getById,
     create,
     update,
+    updateTags,
+    getTags,
     delete: _delete
 };
 
@@ -73,6 +75,26 @@ async function update(id, userParam) {
     Object.assign(user, userParam);
 
     await user.save();
+}
+
+async function updateTags(id, userParam){
+
+    const user = await User.findById(id);
+
+    if(!user) throw 'User not found';
+
+    await User.updateOne({_id: id },{$set: {tags: userParam.tags}});
+
+}
+
+async function getTags(id){
+
+    const user = await User.findById(id);
+
+    if(!user) throw 'User not found';
+
+    return await User.findOne({_id: id},{tags: 1});
+
 }
 
 async function _delete(id) {

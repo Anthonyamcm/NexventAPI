@@ -9,6 +9,8 @@ router.get('/', getAll);
 router.get('/current', getCurrent);
 router.get('/:id', getById);
 router.put('/:id', update);
+router.put('/:id/updateTags', updateTags);
+router.get('/:id/tags', getTags)
 router.delete('/:id', _delete);
 
 module.exports = router;
@@ -46,6 +48,18 @@ function getById(req, res, next) {
 function update(req, res, next) {
     userService.update(req.params.id, req.body)
         .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function updateTags(req, res, next) {
+    userService.updateTags(req.params.id, req.body)
+        .then(() => res.json({code:200}))
+        .catch(err => next(err));
+}
+
+function getTags(req, res, next) {
+    userService.getTags(req.params.id)
+        .then(user => user ? res.json({code: 200, user}) : res.sendStatus(404))
         .catch(err => next(err));
 }
 

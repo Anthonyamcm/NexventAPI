@@ -5,9 +5,8 @@ const schema = new Schema({
     email: { type: String, unique: true, required: 'Please enter your email' },
     name: { type: String, required: 'Please enter your name' },
     hash: { type: String, required: true },
+    tags: {type: Array, default: []},
     createdDate: { type: Date, default: Date.now },
-    likes: {type: Array, default: []},
-    dislikes: {type: Array, default: []}
 });
 
 schema.set('toJSON', {
